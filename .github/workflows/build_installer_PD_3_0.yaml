@@ -37,6 +37,10 @@ jobs:
           mv share/OpenMS/* SourceDir
           cp -r PD_3.0/NuXL_main/* SourceDir
 
+      - name: Check SourceDir Contents
+        run: |
+          ls -R SourceDir
+    
       - name: Build .wixobj file with candle.exe
         run: |
           ./wix/candle.exe OpenMSShareComponents.wxs PD_3.0/NuXLMain.wxs
