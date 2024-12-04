@@ -40,8 +40,13 @@
                       Value="[PROTEOME_DISCOVERER_PATH]"
                       Return="check" />
 
+        <!-- Custom Action to Show Success Message -->
+	  <Binary Id="ShowMessageScript" SourceFile="SourceDir/ShowSuccessMessage.vbs" />
+	  <CustomAction Id="ShowSuccessMessage" BinaryKey="ShowMessageScript" VBScriptCall="" Execute="immediate" Return="check" />
+
         <InstallExecuteSequence>
             <Custom Action="SetTARGETDIR" Before="CostFinalize">NOT Installed</Custom>
+		<Custom Action="ShowSuccessMessage" After="InstallFinalize">NOT Installed</Custom>
         </InstallExecuteSequence>
 
 		<!-- Step 3: Define the directory structure -->
