@@ -10,7 +10,7 @@ jobs:
     runs-on: windows-latest
 
     env:
-      Installer_NAME: PDNuXLNode_3_0
+      INSTALLER_NAME: PDNuXLNode_3_0
 
     steps:
       - name: Checkout code
@@ -35,11 +35,19 @@ jobs:
         run: |
           ./wix/heat.exe dir "share/OpenMS" -gg -sfrag -sreg -srd -template component -cg OpenMSShareComponents -dr NuXLShareOpenMS -out OpenMSShareComponents.wxs
 
+      - name: Generate VBScript file
+        shell: bash
+        run: |
+          cat <<EOF > ShowSuccessMessage.vbs
+          MsgBox " The ${{ env.INSTALLER_NAME }} application is successfully installed. Please restart your Proteome Discoverer", vbInformation, "Installation Complete"
+          EOF
+
       - name: Prepare SourceDir
         run: |
           mkdir SourceDir
           mv share/OpenMS/* SourceDir
           cp -r PD_3.0/NuXL_main/* SourceDir
+          cp ShowSuccessMessage.vbs SourceDir
 
       - name: Check SourceDir Contents
         run: |
@@ -51,14 +59,14 @@ jobs:
           
       - name: Link .wixobj file into .msi with light.exe
         run: |
-          ./wix/light.exe -o PDNuXLNodeInstaller_3_0.msi NuXLMain.wixobj OpenMSShareComponents.wixobj
+          ./wix/light.exe -o ${{ env.INSTALLER_NAME }}.msi NuXLMain.wixobj OpenMSShareComponents.wixobj
 
       - name: Archive build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: PDNuXLNodeInstaller_3_0
+          name: ${{ env.INSTALLER_NAME }}
           path: |
-            PDNuXLNodeInstaller_3_0.msi
+            ${{ env.INSTALLER_NAME }}.msi
       
 
 
