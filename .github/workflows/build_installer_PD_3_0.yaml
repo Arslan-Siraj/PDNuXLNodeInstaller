@@ -31,6 +31,12 @@ jobs:
         run: |
           ./wix/heat.exe dir "share/OpenMS" -gg -sfrag -sreg -srd -template component -cg OpenMSShareComponents -dr NuXLShareOpenMS -out OpenMSShareComponents.wxs
 
+      - name: Prepare SourceDir
+        run: |
+          mkdir SourceDir
+          mv share/OpenMS/* SourceDir
+          cp -r PD_3.0/NuXL_main SourceDir
+
       - name: Build .wixobj file with candle.exe
         run: |
           ./wix/candle.exe OpenMSShareComponents.wxs NuXLMain.wxs
