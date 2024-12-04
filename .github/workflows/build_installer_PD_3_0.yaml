@@ -33,7 +33,7 @@ jobs:
 
       - name: Build .wxs for share/OpenMS folder
         run: |
-          ./wix/heat.exe dir "share/OpenMS" -gg -sfrag -sreg -srd -template component -cg OpenMSShareComponents -dr NuXLShareOpenMS -out OpenMSShareComponents.wxs
+          ./wix/heat.exe dir "D:\a\PDNuXLNodeInstaller\PDNuXLNodeInstaller\share\OpenMS" -gg -sfrag -sreg -srd -template component -cg OpenMSShareComponents -dr NuXLShareOpenMS -out OpenMSShareComponents.wxs
 
       - name: Generate VBScript file
         shell: bash
