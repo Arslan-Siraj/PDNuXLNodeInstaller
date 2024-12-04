@@ -1,0 +1,39 @@
+name: Build Installer for PD 3.0
+on: 
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-win-executable-for-PD-3.0:
+    runs-on: windows-latest
+
+    env:
+      PYTHON_VERSION: 3.11.9
+      Installer_NAME: PDNuXLNode_3.0
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+    - name: Create All-in-one executable folder
+        run: |
+          mkdir share/OpenMS
+          cp -r PD_3.0/share_OpenMS share/OpenMS
+
+    - name: Install WiX Toolset
+        run: |
+          curl -LO https://github.com/wixtoolset/wix3/releases/download/wix3111rtm/wix311-binaries.zip
+          unzip wix311-binaries.zip -d wix
+          rm wix311-binaries.zip
+
+    - name: Build .wxs for share/OpenMS folder
+        run: |
+          ./wix/heat.exe dir "share/OpenMS" -gg -sfrag -sreg -srd -template component -cg StreamlitExeFiles -dr AppSubFolder -out streamlit_exe_files.wxs
+
+    
+      
+
+    
+
+
