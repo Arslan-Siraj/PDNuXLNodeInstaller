@@ -57,7 +57,8 @@
 			<Directory Id='PDToolsFiles' Name='Tools'>
 				<Directory Id='NuXL' Name='NuXL'>
 					<Directory Id='NuXLBin' Name='bin' />
-					<Directory Id='NuXLShareOpenMS' Name='share'>						
+					<Directory Id='NuXLShareOpenMS' Name='share'>	
+						 <Directory Id="OpenMS" Name="OpenMS"/>
 					</Directory>
 				</Directory>
 			</Directory>
