@@ -19,7 +19,11 @@ jobs:
       - name: Create share/OpenMS
         run: |
           mkdir share/OpenMS
-          cp -r PD_3.0/share_OpenMS share/OpenMS
+          cp -r PD_3.0/share_OpenMS/* share/OpenMS
+
+      - name: Check share/OpenMS Contents
+        run: |
+          ls -R share/OpenMS
 
       - name: Install WiX Toolset
         run: |
