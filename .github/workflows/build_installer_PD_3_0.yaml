@@ -10,7 +10,7 @@ jobs:
     runs-on: windows-latest
 
     env:
-      Installer_NAME: PDNuXLNode_3.0
+      Installer_NAME: PDNuXLNode_3_0
 
     steps:
       - name: Checkout code
