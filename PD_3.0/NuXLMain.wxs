@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='windows-1252'?>
 
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
-    <Product Name='OpenMS PD nodes' Manufacturer='OpenMS Team'
+    <Product Name='OpenMSPDNode_3_0' Manufacturer='OpenMS Team'
         Id='477329ad-a5a8-42f0-8114-7db495b978ce' 
         UpgradeCode='4843834a-e325-46c2-a782-ff0c38bab16a'
         Language='1033' Codepage='1252' Version='3.0.0'
@@ -31,7 +31,7 @@
 
 	<!-- Through the error need a Proteome Discoverer 3.0 -->
 	<Condition Message="Proteome Discoverer 3.0 must be installed to proceed.">
-     			 <![CDATA[PROTEOME_DISCOVERER_PATH]]>
+     			 <![CDATA[PROTEOME_DISCOVERER_PATH OR Installed]]>
       </Condition>
 
 	  <!-- Step 2: Set TARGETDIR based on PROTEOME_DISCOVERER_PATH -->
