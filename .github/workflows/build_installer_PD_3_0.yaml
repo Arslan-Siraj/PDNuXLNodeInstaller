@@ -1,6 +1,10 @@
-name: Build Installer for PD 3.0
+name: Build NuXL node installer for PD 3.0 
 
 on: 
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -14,14 +18,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Download and unzip PD3_0-NuXL.zip
+        run: |
+          curl -L -o PD3_0-NuXL.zip https://github.com/timosachsenberg/OpenMS/releases/download/NuXLPublication/PD3_0-NuXL.zip
+          unzip PD3_0-NuXL.zip -d PD_3.0_zip
+          
+      - name: Check PD_3.0_zip Contents
+        run: |
+          ls -R PD_3.0_zip
+
       - name: Create share/OpenMS
         run: |
-          mkdir share/OpenMS
-          cp -r PD_3.0/share_OpenMS/* share/OpenMS/
+          mkdir share
+          cp -r PD_3.0_zip/PD3_0-NuXL/NuXL/share/* share/
 
-      - name: Check share/OpenMS Contents
+      - name: Check share Contents
         run: |
-          ls -R share/OpenMS
+          ls -R share
 
       - name: Install WiX Toolset
         run: |
@@ -31,7 +44,7 @@ jobs:
 
       - name: Build .wxs for share/OpenMS folder
         run: |
-          ./wix/heat.exe dir "D:\a\PDNuXLNodeInstaller\PDNuXLNodeInstaller\share\OpenMS" -gg -sfrag -sreg -srd -template component -cg OpenMSShareComponents -dr NuXLShareOpenMS -out OpenMSShareComponents.wxs
+          ./wix/heat.exe dir ".\\share\\OpenMS" -gg -sfrag -sreg -srd -template component -cg OpenMSShareComponents -dr NuXLShareOpenMS -out OpenMSShareComponents.wxs
 
       - name: Generate VBScript file
         shell: bash
@@ -44,8 +57,9 @@ jobs:
         run: |
           mkdir SourceDir
           mv share/OpenMS/* SourceDir
-          cp -r PD_3.0/NuXL_main/* SourceDir
+          cp PD_3.0_zip/PD3_0-NuXL/NuXL/bin/* SourceDir
           cp ShowSuccessMessage.vbs SourceDir
+          mv PD_3.0_zip/PD3_0-NuXL/*.dll SourceDir
 
       - name: Check SourceDir Contents
         run: |
