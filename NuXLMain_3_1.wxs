@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product
+    Name="PDNuXLNode_3_1"
+    Manufacturer="OpenMS Team"
+    Id="282cbc7d-28bc-4190-a483-a00dd49c2515"
+    UpgradeCode="2dc84c2d-0e5d-4a35-bd4a-31b62682c5bd"
+    Language="1033"
+    Codepage="1252"
+    Version="3.0.0">
+
+		<Package
+			Id="*"
+			Keywords="Installer"
+			Description="OpenMS PD nodes Installer"
+			InstallerVersion="300"
+			Languages="1033"
+			Compressed="yes"
+			SummaryCodepage="1252"
+			InstallPrivileges="elevated"
+			Platform="x64" />
+
+    <Media Id="1" Cabinet="opennuxl.cab" EmbedCab="yes" CompressionLevel="medium" />
+
+    <!-- Registry Search -->
+    <Property Id="PROTEOME_DISCOVERER_PATH" Secure="yes">
+      <RegistrySearch
+        Id="ProteomeDiscovererInstallPath"
+        Root="HKLM"
+        Key="SOFTWARE\Thermo Scientific\Proteome Discoverer\3.1"
+        Type="directory"
+        Win64="yes" />
+        
+    </Property>
+
+    <!-- Through the error need a Proteome Discoverer 3.1 -->
+    <Condition Message="Proteome Discoverer 3.1 must be installed to proceed.">
+			<![CDATA[PROTEOME_DISCOVERER_PATH OR Installed]]>
+    </Condition>
+
+    <!-- Set TARGETDIR -->
+    <CustomAction
+      Id="SetTARGETDIR"
+      Property="TARGETDIR"
+      Value="[PROTEOME_DISCOVERER_PATH]"
+      Return="check" />
+
+    <!-- Show success message -->
+    <Binary Id="ShowMessageScript" SourceFile="SourceDir/ShowSuccessMessage.vbs" />
+	  <CustomAction Id="ShowSuccessMessage" BinaryKey="ShowMessageScript" VBScriptCall="" Execute="immediate" Return="check" />
+
+    <!-- Sequences: define each block once -->
+    <!-- <InstallUISequence>
+      <AppSearch />
+      <Custom Action="SetTARGETDIR" Before="CostFinalize">PROTEOME_DISCOVERER_PATH AND NOT Installed</Custom>
+    </InstallUISequence>  -->
+
+    <InstallExecuteSequence>
+      <AppSearch />
+      <Custom Action="SetTARGETDIR" Before="CostFinalize">PROTEOME_DISCOVERER_PATH AND NOT Installed</Custom>
+      <Custom Action="ShowSuccessMessage" After="InstallFinalize">NOT Installed</Custom>
+    </InstallExecuteSequence>
+
+    <!-- Directory Structure -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+          <Directory Id="ThermoDiscoverer" Name="Thermo.Discoverer" />
+          <Directory Id="ThermoMagellanServer" Name="Thermo.Magellan.Server" />
+          <Directory Id="NuXLShareOpenMS" Name="Tools">
+          </Directory>
+    </Directory>
+
+    <!-- DLLs to Specific Locations -->
+    <DirectoryRef Id="ThermoMagellanServer">
+      <Component Id="NuXLNodeDLL" Guid="4342ae1c-f7e6-4d66-9364-ac102e5f8586">
+        <File Id="PD.OpenMS.NuXLNode.dll" Name="PD.OpenMS.NuXLNode.dll" Source="SourceDir\PD.OpenMS.NuXLNode.dll" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="ThermoDiscoverer">
+      <Component Id="NuXLViewerDLL" Guid="7c7324de-ae66-4811-8fce-d84a7af101a2">
+        <File Id="PD.OpenMS.NuXLViewer.dll" Name="PD.OpenMS.NuXLViewer.dll" Source="SourceDir\PD.OpenMS.NuXLViewer.dll" KeyPath="yes" />
+      </Component>
+      <Component Id="ZedGraphDLL" Guid="17f724a6-95b1-48db-b43c-7f68d10da755">
+        <File Id="ZedGraph_OpenMS.dll" Name="ZedGraph_OpenMS.dll" Source="SourceDir\ZedGraph_OpenMS.dll" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <!-- Include harvested files from Tools\NuXL -->
+    <DirectoryRef Id="NuXLShareOpenMS" />
+
+    <!-- Features -->
+    <Feature Id="ProductFeature" Title="OpenMSNuXLPDNode_3_1" Level="1">
+      <ComponentRef Id="NuXLNodeDLL" />
+      <ComponentRef Id="NuXLViewerDLL" />
+      <ComponentRef Id="ZedGraphDLL" />
+      <!-- Features in share,bin folder in SourceDir-->
+      <ComponentGroupRef Id="OpenMSShareComponents" />  
+    </Feature>
+
+  </Product>
+</Wix>
