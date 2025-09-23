@@ -11,6 +11,11 @@ Automating the integration of the NuXL node into Thermo Fisher’s **Proteome Di
   Automatically compiles additional resources into `.wixobj` files and produces the `.msi` installer.
 - **Prerequisite:**  
   Thermo Fisher **Proteome Discoverer 3.0** must be installed prior to running the PDNuXL installer.
+- **Download (.msi):**  
+  Use the released installer **v0.0.2** to run NuXL within Proteome Discoverer 3.0:  
+  <https://github.com/Arslan-Siraj/PDNuXLNodeInstaller/releases/tag/v0.0.2>
+- **Usage:**  
+  After installing the above `.msi`, launch Proteome Discoverer 3.0 and configure workflows including the NuXL node as needed.
 
 ### Proteome Discoverer 3.1
 Support in progress.
