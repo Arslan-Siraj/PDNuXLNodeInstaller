@@ -1,0 +1,81 @@
+name: Build NuXL node installer for PD 3.0 
+
+on: 
+  #push:
+  #  branches: [ "main" ]
+  #pull_request:
+  #  branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-win-executable-for-PD:
+    runs-on: windows-latest
+
+    env:
+      INSTALLER_NAME: PDNuXLNode_3_0
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download and unzip PD3_0-NuXL.zip
+        run: |
+          curl -L -o PD3_0-NuXL.zip https://github.com/timosachsenberg/OpenMS/releases/download/NuXLPublication/PD3_0-NuXL.zip
+          unzip PD3_0-NuXL.zip -d PD_3.0_zip
+          
+      - name: Check PD_3.0_zip Contents
+        run: |
+          ls -R PD_3.0_zip
+
+      - name: Create share/OpenMS
+        run: |
+          mkdir share
+          cp -r PD_3.0_zip/PD3_0-NuXL/NuXL/share/* share/
+
+      - name: Check share Contents
+        run: |
+          ls -R share
+
+      - name: Install WiX Toolset
+        run: |
+          curl -LO https://github.com/wixtoolset/wix3/releases/download/wix3111rtm/wix311-binaries.zip
+          unzip wix311-binaries.zip -d wix
+          rm wix311-binaries.zip
+
+      - name: Build .wxs for share/OpenMS folder
+        run: |
+          ./wix/heat.exe dir ".\\share\\OpenMS" -gg -sfrag -sreg -srd -template component -cg OpenMSShareComponents -dr NuXLShareOpenMS -out OpenMSShareComponents.wxs
+
+      - name: Generate VBScript file
+        shell: bash
+        run: |
+          cat <<EOF > ShowSuccessMessage.vbs
+          MsgBox " The ${{ env.INSTALLER_NAME }} application is successfully installed. Please restart your Proteome Discoverer", vbInformation, "Installation Complete"
+          EOF
+
+      - name: Prepare SourceDir
+        run: |
+          mkdir SourceDir
+          mv share/OpenMS/* SourceDir
+          cp PD_3.0_zip/PD3_0-NuXL/NuXL/bin/* SourceDir
+          cp ShowSuccessMessage.vbs SourceDir
+          mv PD_3.0_zip/PD3_0-NuXL/*.dll SourceDir
+
+      - name: Check SourceDir Contents
+        run: |
+          ls -R SourceDir
+    
+      - name: Build .wixobj file with candle.exe
+        run: |
+          ./wix/candle.exe OpenMSShareComponents.wxs PD_3.0/NuXLMain_3_0.wxs
+          
+      - name: Link .wixobj file into .msi with light.exe
+        run: |
+          ./wix/light.exe -o ${{ env.INSTALLER_NAME }}.msi NuXLMain_3_0.wixobj OpenMSShareComponents.wixobj
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.INSTALLER_NAME }}
+          path: |
+            ${{ env.INSTALLER_NAME }}.msi
