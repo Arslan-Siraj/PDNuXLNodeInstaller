@@ -1,8 +1,10 @@
-name: Build NuXL node installer for PD 3.1
+name: Build NuXL node installer for PD 3.1 
 
-on:
+on: 
   push:
     branches: [ "main" ]
+  #pull_request:
+  #  branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -16,63 +18,56 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download and unzip PD3_1-NuXL.zip
-        shell: pwsh
+      - name: Download and unzip PD3_0-NuXL.zip
         run: |
           curl -L -o PD3_1-NuXL.zip https://github.com/timosachsenberg/OpenMS/releases/download/NuXLPublication/PD3_1-NuXL.zip
-          mkdir PD_3_1_zip
-          tar -xf PD3_1-NuXL.zip -C PD_3_1_zip
-
-      - name: Check PD_3.1_zip contents
-        run: ls -R PD_3_1_zip
-
-      # Keep the NuXL folder boundary intact inside SourceDir
-      - name: Prepare SourceDir with intact NuXL folder
+          unzip PD3_1-NuXL.zip -d PD_3.1_zip
+          
+      - name: Check PD_3.1_zip Contents
+        run: |
+          ls -R PD_3.1_zip
+          
+      - name: Create share/NuXL and copy payload
         shell: pwsh
         run: |
-          New-Item -ItemType Directory -Force -Path "SourceDir" | Out-Null
-          Copy-Item -Recurse -Force "PD_3_1_zip\NuXL_package_PD_3_1_22042024\NuXL" "SourceDir\NuXL"
-          # If you have extra DLLs next to the package, keep them alongside SourceDir (not inside NuXL)
-          if (Test-Path "PD_3_1_zip\NuXL_package_PD_3_1_22042024\*.dll") {
-            Copy-Item -Force "PD_3_1_zip\NuXL_package_PD_3_1_22042024\*.dll" "SourceDir\"
-          }
-
-      - name: Check SourceDir contents
-        run: ls -R SourceDir
-
+          New-Item -ItemType Directory -Force -Path "share\NuXL" | Out-Null
+          Copy-Item -Recurse -Force "PD_3.1_zip\NuXL_package_PD_3_1_22042024\NuXL\*" "share\NuXL\"
+          
+      - name: Check share Contents
+        run: |
+          ls -R share
+          
       - name: Install WiX Toolset
-        shell: pwsh
         run: |
           curl -LO https://github.com/wixtoolset/wix3/releases/download/wix3111rtm/wix311-binaries.zip
-          tar -xf wix311-binaries.zip -C .
-          Rename-Item -Path ".\wix311-binaries" -NewName "wix"
-
-      # IMPORTANT: no -srd so the NuXL folder itself is harvested
-      - name: Harvest SourceDir\NuXL (keep root folder)
-        shell: pwsh
+          unzip wix311-binaries.zip -d wix
+          rm wix311-binaries.zip
+          
+      - name: Build .wxs for share/NuXL folder
         run: |
-          .\wix\heat.exe dir ".\SourceDir\NuXL" `
-            -gg -sfrag -sreg `
-            -template component `
-            -cg OpenMSShareComponents `
-            -dr NuXLShareOpenMS `
-            -out OpenMSShareComponents.wxs
-
-      - name: Build .wixobj files with candle.exe
-        shell: pwsh
+          ./wix/heat.exe dir ".\\share" -gg -sfrag -sreg -srd -template component -cg OpenMSShareComponents -dr NuXLShareOpenMS -out OpenMSShareComponents.
+          
+      - name: Prepare SourceDir
         run: |
-          .\wix\candle.exe -nologo OpenMSShareComponents.wxs
-          # Ensure the path to your main WXS is correct:
-          .\wix\candle.exe -nologo PD_3_1\NuXLMain_3_1.wxs
-
-      - name: Link .msi with light.exe
-        shell: pwsh
+          mkdir SourceDir
+          mv share/NuXL/* SourceDir
+          #cp PD_3.1_zip/NuXL_package_PD_3_1_22042024/NuXL/bin/* SourceDir
+          #cp ShowSuccessMessage.vbs SourceDir
+          mv PD_3.1_zip/NuXL_package_PD_3_1_22042024/*.dll SourceDir
+      - name: Check SourceDir Contents
         run: |
-          .\wix\light.exe -nologo -o "${{ env.INSTALLER_NAME }}.msi" `
-            PD_3_1\NuXLMain_3_1.wixobj OpenMSShareComponents.wixobj
-
+          ls -R SourceDir
+    
+      - name: Build .wixobj file with candle.exe
+        run: |
+          ./wix/candle.exe OpenMSShareComponents.wxs PD_3_1/NuXLMain_3_1.wxs
+          
+      - name: Link .wixobj file into .msi with light.exe
+        run: |
+          ./wix/light.exe -o ${{ env.INSTALLER_NAME }}.msi NuXLMain_3_1.wixobj OpenMSShareComponents.wixobj
       - name: Archive build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.INSTALLER_NAME }}
-          path: ${{ env.INSTALLER_NAME }}.msi
+          path: |
+            ${{ env.INSTALLER_NAME }}.msi
