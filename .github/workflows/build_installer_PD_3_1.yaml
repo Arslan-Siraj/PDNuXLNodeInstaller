@@ -47,20 +47,13 @@ jobs:
         run: |
           ./wix/heat.exe dir ".\\share\\NuXL" -gg -sfrag -sreg -srd -template component -cg OpenMSShareComponents -dr NuXLShareOpenMS -out OpenMSShareComponents.wxs
 
-      - name: Generate VBScript file
-        shell: bash
-        run: |
-          cat <<EOF > ShowSuccessMessage.vbs
-          MsgBox " The ${{ env.INSTALLER_NAME }} application is successfully installed. Please restart your Proteome Discoverer", vbInformation, "Installation Complete"
-          EOF
-
       - name: Prepare SourceDir
         run: |
           mkdir SourceDir
-          mv share/OpenMS/* SourceDir
-          cp PD_3.1_zip/PD3_1-NuXL/NuXL/bin/* SourceDir
-          cp ShowSuccessMessage.vbs SourceDir
-          mv PD_3.1_zip/PD3_1-NuXL/*.dll SourceDir
+          mv share/NuXL/* SourceDir
+          #cp PD_3.1_zip/NuXL_package_PD_3_1_22042024/NuXL/bin/* SourceDir
+          #cp ShowSuccessMessage.vbs SourceDir
+          mv PD_3.1_zip/NuXL_package_PD_3_1_22042024/*.dll SourceDir
 
       - name: Check SourceDir Contents
         run: |
