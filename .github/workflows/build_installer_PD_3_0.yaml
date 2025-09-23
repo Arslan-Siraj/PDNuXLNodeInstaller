@@ -1,10 +1,10 @@
 name: Build NuXL node installer for PD 3.0 
 
 on: 
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  #push:
+  #  branches: [ "main" ]
+  #pull_request:
+  #  branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -71,7 +71,7 @@ jobs:
           
       - name: Link .wixobj file into .msi with light.exe
         run: |
-          ./wix/light.exe -o ${{ env.INSTALLER_NAME }}.msi NuXLMain.wixobj OpenMSShareComponents.wixobj
+          ./wix/light.exe -o ${{ env.INSTALLER_NAME }}.msi NuXLMain_3_0.wixobj OpenMSShareComponents.wixobj
 
       - name: Archive build artifacts
         uses: actions/upload-artifact@v4
