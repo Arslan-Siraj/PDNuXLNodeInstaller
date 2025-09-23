@@ -50,7 +50,7 @@ jobs:
       - name: Prepare SourceDir
         run: |
           mkdir SourceDir
-          mv share/NuXL/* SourceDir
+          mv share/* SourceDir
           #cp PD_3.1_zip/NuXL_package_PD_3_1_22042024/NuXL/bin/* SourceDir
           #cp ShowSuccessMessage.vbs SourceDir
           mv PD_3.1_zip/NuXL_package_PD_3_1_22042024/*.dll SourceDir
