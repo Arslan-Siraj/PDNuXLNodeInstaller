@@ -31,7 +31,7 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path "share\NuXL" | Out-Null
-          Copy-Item -Recurse -Force "PD_3.1_zip\PD3_1-NuXL\NuXL\*" "share\NuXL\"
+          Copy-Item -Recurse -Force "PD_3.1_zip\NuXL_package_PD_3_1_22042024\NuXL\*" "share\NuXL\"
 
       - name: Check share Contents
         run: |
