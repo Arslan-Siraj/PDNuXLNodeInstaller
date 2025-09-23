@@ -15,7 +15,9 @@ Automating the integration of the NuXL node into Thermo Fisher’s **Proteome Di
   Use the released installer **v0.0.2** to run NuXL within Proteome Discoverer 3.0:  
   <https://github.com/Arslan-Siraj/PDNuXLNodeInstaller/releases/tag/v0.0.2>
 - **Usage:**  
-  After installing the above `.msi`, launch Proteome Discoverer 3.0 and configure workflows including the NuXL node as needed.
+  After installing the above `.msi`, launch Proteome Discoverer 3.0 and configure workflows including the NuXL node as needed.+
+- **Using NuXL within Proteome Discoverer 3.0**  
+  Detailed setup and workflow guidance is available in the OpenMS documentation: <https://openms.de/RNPxl>
 
 ### Proteome Discoverer 3.1
 Support in progress.
