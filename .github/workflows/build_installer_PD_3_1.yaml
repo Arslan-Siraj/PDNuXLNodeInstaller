@@ -30,7 +30,7 @@ jobs:
       - name: Create share/OpenMS
         run: |
           mkdir share
-          cp -r PD_3.1_zip/PD3_1-NuXL/NuXL/share/* share/
+          cp -r PD_3.1_zip/NuXL_package_PD_3_1_22042024/NuXL/* share/
 
       - name: Check share Contents
         run: |
