@@ -1,8 +1,8 @@
 name: Build NuXL node installer for PD 3.1 
 
 on: 
-  #push:
-  #  branches: [ "main" ]
+  push:
+    branches: [ "main" ]
   #pull_request:
   #  branches: [ "main" ]
   workflow_dispatch:
@@ -42,9 +42,9 @@ jobs:
           unzip wix311-binaries.zip -d wix
           rm wix311-binaries.zip
 
-      - name: Build .wxs for share/OpenMS folder
+      - name: Build .wxs for share/NuXL folder
         run: |
-          ./wix/heat.exe dir ".\\share\\OpenMS" -gg -sfrag -sreg -srd -template component -cg OpenMSShareComponents -dr NuXLShareOpenMS -out OpenMSShareComponents.wxs
+          ./wix/heat.exe dir ".\\share\\NuXL" -gg -sfrag -sreg -srd -template component -cg OpenMSShareComponents -dr NuXLShareOpenMS -out OpenMSShareComponents.wxs
 
       - name: Generate VBScript file
         shell: bash
