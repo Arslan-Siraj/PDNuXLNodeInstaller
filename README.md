@@ -1,9 +1,7 @@
 ## Build PDNuXLNodeInstallers
 Automating the integration of the NuXL node into Thermo Fisher’s **Proteome Discoverer**.
 
-
-### Currently Supported
-#### Proteome Discoverer 3.0
+## Proteome Discoverer 3.0
 - **Packaging and configuration (.wxs):**  
   Repository path: <https://github.com/Arslan-Siraj/PDNuXLNodeInstaller/tree/main/PD_3.0>  
   Contains the WiX source defining file shipment and installer configuration.
@@ -20,9 +18,9 @@ Automating the integration of the NuXL node into Thermo Fisher’s **Proteome Di
 - **Using NuXL within Proteome Discoverer 3.0**  
   Detailed setup and workflow guidance is available in the OpenMS documentation: <https://openms.de/RNPxl>
 
-#### Proteome Discoverer 3.1
+## Proteome Discoverer 3.1
 Support in progress.
 
 
-**Citation**  
+## Citation  
   Welp, L. M., Wulf, A., Chernev, A., Horokhovskyi, Y., Moshkovskii, S., Dybkov, O., Neumann, P., Pašen, M., Siraj, A., Raabe, M.,...., Kohlbacher, O., Liepe, J., Sachsenberg, T., Urlaub, H. (2025). *Chemical crosslinking extends and complements UV crosslinking in analysis of RNA/DNA nucleic acid–protein interaction sites by mass spectrometry*. Nucleic Acids Research, 53(15), gkaf727. [https://doi.org/10.1093/nar/gkaf727](https://doi.org/10.1093/nar/gkaf727)
