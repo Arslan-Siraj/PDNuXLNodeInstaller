@@ -28,8 +28,8 @@ Windows (.msi) installer for the NuXL node used in Thermo Fisher’s **Proteome 
 - **Prerequisite:**  
   Thermo Fisher **Proteome Discoverer 3.1** must be installed prior to running the PDNuXL installer.
 - **Download (.msi):**  
-  Use the released installer **v0.0.2** to run NuXL within Proteome Discoverer 3.1:  
-  <https://github.com/Arslan-Siraj/PDNuXLNodeInstaller/releases/tag/v0.0.2>
+  Use the released installer **v0.0.3** to run NuXL within Proteome Discoverer 3.1:  
+  <https://github.com/Arslan-Siraj/PDNuXLNodeInstaller/releases/tag/v0.0.3>
 - **Usage:**  
   After installing the above `.msi`, launch Proteome Discoverer 3.1 and configure workflows including the NuXL node as needed.
 - **Using NuXL within Proteome Discoverer 3.1**  
