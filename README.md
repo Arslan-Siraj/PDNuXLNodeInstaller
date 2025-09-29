@@ -1,7 +1,7 @@
 ## Build PDNuXLNodeInstallers
 Windows (.msi) installer for the NuXL node used in Thermo Fisher’s **Proteome Discoverer**.
 
-## Proteome Discoverer 3.0
+## Proteome Discoverer 3.0 Installer
 - **Packaging and configuration (.wxs):**  
   Repository path: <https://github.com/Arslan-Siraj/PDNuXLNodeInstaller/tree/main/PD_3.0>  
   Contains the WiX source defining file shipment and installer configuration.
@@ -18,7 +18,7 @@ Windows (.msi) installer for the NuXL node used in Thermo Fisher’s **Proteome 
 - **Using NuXL within Proteome Discoverer 3.0**  
   Detailed setup and workflow guidance is available in the OpenMS documentation: <https://openms.de/RNPxl>
 
-## Proteome Discoverer 3.1 
+## Proteome Discoverer 3.1 Installer
 - **Packaging and configuration (.wxs):**  
   Repository path: <https://github.com/Arslan-Siraj/PDNuXLNodeInstaller/tree/main/PD_3_1>  
   Contains the WiX source defining file shipment and installer configuration.
