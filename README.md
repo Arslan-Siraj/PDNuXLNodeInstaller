@@ -40,7 +40,13 @@ Windows (.msi) installer for the NuXL node used in Thermo Fisher’s **Proteome 
 1. **Before Installation:** Download the PD archive from https://github.com/timosachsenberg/OpenMS/releases/tag/NuXLPublication
 > **Note:** Please ensure that Proteome Discoverer is closed before running the NuXL installer.
 2. **Manual Installation:** To register the NuXL nodes in ProteomeDiscoverer, files must be copied manually to the correct folder.
-> 
+
+**For PD 3.0 you need to:**
+1.	Copy `PD.OpenMS.AdapterNodes.dll` to `C:\Program Files\Thermo\Proteome Discoverer 3.0\Proteome Discoverer 3.0\System\Release`
+2.	Copy `ZedGraph_OpenMS.dll` to `C:\Program Files\Thermo\Proteome Discoverer 3.0\Proteome Discoverer 3.0\System\Release`
+3.	Go to `C:\Program Files\Thermo\Proteome Discoverer 3.0\Proteome Discoverer 3.0\Tools` and replace the folder “NuXL” with the one found in the .zip
+4.	Open PD, go to `Administration -> Manage Licenses`. Click “Scan for Missing Features” on top of the list of available licenses on the right side of the PD window.
+
 **For PD 3.1 you need to:**
 - Copy `PD.OpenMS.NuXLNode.dll` to `C:\Program Files\Thermo\Proteome Discoverer 3.1\Proteome Discoverer 3.1\Thermo.Magellan.Server`
 - Copy `PD.OpenMS.NuXLViewer.dll` to `C:\Program Files\Thermo\Proteome Discoverer 3.1\Proteome Discoverer 3.1\Thermo.Discoverer`
