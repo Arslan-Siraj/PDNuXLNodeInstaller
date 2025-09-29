@@ -18,7 +18,7 @@ Windows (.msi) installer for the NuXL node used in Thermo Fisher’s **Proteome 
 - **Using NuXL within Proteome Discoverer 3.0**  
   Detailed setup and workflow guidance is available in the OpenMS documentation: <https://openms.de/RNPxl>
 
-## Proteome Discoverer 3.1
+## Proteome Discoverer 3.1 
 - **Packaging and configuration (.wxs):**  
   Repository path: <https://github.com/Arslan-Siraj/PDNuXLNodeInstaller/tree/main/PD_3_1>  
   Contains the WiX source defining file shipment and installer configuration.
@@ -35,6 +35,18 @@ Windows (.msi) installer for the NuXL node used in Thermo Fisher’s **Proteome 
 - **Using NuXL within Proteome Discoverer 3.1**  
   Detailed setup and workflow guidance is available in the OpenMS documentation: <https://openms.de/RNPxl>
 
+## Proteome Discoverer 3.0 and 3.1 manuall installation
+
+1. **Before Installation:** Download the PD archive from https://github.com/timosachsenberg/OpenMS/releases/tag/NuXLPublication
+> **Note:** Please ensure that Proteome Discoverer is closed before running the NuXL installer.
+2. **Manual Installation:** To register the NuXL nodes in ProteomeDiscoverer, files must be copied manually to the correct folder.
+> 
+**For PD 3.1 you need to:**
+- Copy `PD.OpenMS.NuXLNode.dll` to `C:\Program Files\Thermo\Proteome Discoverer 3.1\Proteome Discoverer 3.1\Thermo.Magellan.Server`
+- Copy `PD.OpenMS.NuXLViewer.dll` to `C:\Program Files\Thermo\Proteome Discoverer 3.1\Proteome Discoverer 3.1\Thermo.Discoverer`
+- Copy `ZedGraph_OpenMS.dll` to `C:\Program Files\Thermo\Proteome Discoverer 3.1\Proteome Discoverer 3.1\Thermo.Discoverer`
+- Go to `C:\Program Files\Thermo\Proteome Discoverer 3.1\Proteome Discoverer 3.1\Tools` and copy the folder `NuXL` from the .zip.
+- Open PD, go to `Administration -> Manage Licenses`. Click Scan for Missing Features on top of the list of available licenses on the right side of the PD window.
 
 ## Citation  
   Welp, L. M., Wulf, A., Chernev, A., Horokhovskyi, Y., Moshkovskii, S., Dybkov, O., Neumann, P., Pašen, M., Siraj, A., Raabe, M.,...., Kohlbacher, O., Liepe, J., Sachsenberg, T., Urlaub, H. (2025). *Chemical crosslinking extends and complements UV crosslinking in analysis of RNA/DNA nucleic acid–protein interaction sites by mass spectrometry*. Nucleic Acids Research, 53(15), gkaf727. [https://doi.org/10.1093/nar/gkaf727](https://doi.org/10.1093/nar/gkaf727)
