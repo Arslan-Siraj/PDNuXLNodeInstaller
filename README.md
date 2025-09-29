@@ -43,7 +43,7 @@ This repository created for Windows (.msi) installer for the NuXL node used in T
 - **Using NuXL within Proteome Discoverer 3.1**  
   Detailed setup and workflow guidance is available in the OpenMS documentation: <https://openms.de/RNPxl>
 
-## Proteome Discoverer 3.0 and 3.1 manuall installation
+## Proteome Discoverer 3.0 and 3.1 manual installation
 
 1. **Before Installation:** Download the PD archive from https://github.com/timosachsenberg/OpenMS/releases/tag/NuXLPublication
 > **Note:** Please ensure that Proteome Discoverer is closed before running the NuXL installer.
